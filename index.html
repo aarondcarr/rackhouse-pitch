@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rackhouse — Pitch</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card-border: #222;
+    --accent: #ff6b35;
+    --accent2: #ffd166;
+    --text: #f0f0f0;
+    --muted: #888;
+    --green: #4ecdc4;
+    --red: #ff6b6b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* SLIDE SYSTEM */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
+    position: relative;
+  }
+
+  .slide-inner {
+    max-width: 800px;
+    width: 100%;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,107,53,0.15) 0%, transparent 70%);
+  }
+
+  .hero-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  .hero-tagline {
+    font-size: 1.5rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 32px;
+  }
+
+  .hero-hook {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hero-hook em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  /* PROBLEM CARDS */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .problem-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .problem-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .problem-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .problem-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* FEATURE CARDS */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+
+  .feature-card:hover {
+    border-color: var(--accent);
+  }
+
+  .feature-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+
+  .feature-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* FLOW */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 0;
+    position: relative;
+  }
+
+  .flow-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 28px;
+    bottom: 0;
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    transform: translateY(100%);
+    z-index: 0;
+  }
+
+  .flow-number {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--bg);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .flow-content h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .flow-content p {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .flow-time {
+    font-size: 0.8rem;
+    color: var(--green);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* COMPARE TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+  }
+
+  .compare-table th, .compare-table td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .compare-table th {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .compare-table th:last-child {
+    color: var(--accent);
+  }
+
+  .compare-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .compare-table td:first-child {
+    font-weight: 500;
+  }
+
+  .check { color: var(--green); font-size: 1.2rem; }
+  .cross { color: var(--red); font-size: 1.2rem; opacity: 0.5; }
+
+  /* PRICING */
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+  }
+
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .price-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(to bottom, rgba(255,107,53,0.08), var(--card));
+  }
+
+  .price-card.featured::before {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--bg);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 16px;
+    border-radius: 20px;
+  }
+
+  .price-tier {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .price-amount {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .price-card.featured .price-amount {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .price-period {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .price-features {
+    list-style: none;
+    text-align: left;
+  }
+
+  .price-features li {
+    padding: 8px 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .price-features li::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 100%, rgba(255,107,53,0.1) 0%, transparent 70%);
+  }
+
+  .cta-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .cta-sub {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: var(--bg);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 16px 48px;
+    border-radius: 50px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,107,53,0.3);
+  }
+
+  .cta-note {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 16px;
+  }
+
+  /* SCROLL INDICATOR */
+  .scroll-hint {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-hint::after {
+    content: '↓';
+    font-size: 1.2rem;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 2px;
+    margin: 0 auto 32px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero-logo { font-size: 2.8rem; }
+    .hero-hook { font-size: 1.4rem; }
+    .section-title { font-size: 1.8rem; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr; }
+    .pricing-cards { grid-template-columns: 1fr; }
+    .stat-number { font-size: 2rem; }
+    .compare-table { font-size: 0.85rem; }
+    .compare-table th, .compare-table td { padding: 12px 14px; }
+    .price-amount { font-size: 2.5rem; }
+    .cta-title { font-size: 1.8rem; }
+    .slide { padding: 40px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: HERO -->
+<section class="slide hero">
+  <div class="slide-inner" style="text-align:center;">
+    <div class="hero-logo">Rackhouse</div>
+    <div class="hero-tagline">The Reseller's Unfair Advantage</div>
+    <div class="hero-hook">
+      Upload photos. Get <em>era-accurate listings</em> in seconds. Post everywhere.
+    </div>
+  </div>
+  <div class="scroll-hint">Swipe up</div>
+</section>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-label">The Problem</div>
+    <div class="section-title">Listing vintage is slow as hell</div>
+    <div class="section-subtitle">Every seller knows the pain. You've got 50 items to list and each one takes 15-20 minutes of research, writing, measuring, and platform hopping.</div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">⏰</div>
+        <div>
+          <h3>Hours writing descriptions</h3>
+          <p>Researching eras, writing copy, getting the details right — for every. single. item.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🤷</div>
+        <div>
+          <h3>Which platform should I post to?</h3>
+          <p>eBay? Depop? Poshmark? Every item has an ideal home. Guessing wrong means it sits.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">💀</div>
+        <div>
+          <h3>Ghosted offers on Depop</h3>
+          <p>Buyer sends an offer, you accept, they vanish. Non-binding offers waste everyone's time.</p>
+        </div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📋</div>
+        <div>
+          <h3>No centralized inventory</h3>
+          <p>Listings scattered across 4 platforms. No single view of what's live, what's sold, what needs attention.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: HOW IT WORKS -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-label">How It Works</div>
+    <div class="section-title">Photo → Listing → Live</div>
+    <div class="section-subtitle">Three steps. Under two minutes. AI handles the research and writing.</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-number">1</div>
+        <div class="flow-content">
+          <h3>📸 Snap photos</h3>
+          <p>Upload your item photos — tags, labels, details, whatever you've got</p>
+          <div class="flow-time">~10 seconds</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-number">2</div>
+        <div class="flow-content">
+          <h3>🤖 AI generates your listing</h3>
+          <p>Era-accurate descriptions, pricing suggestions, platform recommendations — in YOUR shop's voice</p>
+          <div class="flow-time">~15 seconds</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-number">3</div>
+        <div class="flow-content">
+          <h3>🚀 Post to every platform</h3>
+          <p>One click to push to eBay, Depop, and more. Cross-listed instantly.</p>
+          <div class="flow-time">~5 seconds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: KEY FEATURES -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-label">Features</div>
+    <div class="section-title">Built for how you actually sell</div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-emoji">🧠</div>
+        <h3>AI That Gets Vintage</h3>
+        <p>Knows eras, brands, styles. Identifies details from your photos that buyers care about.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">🎨</div>
+        <h3>Your Voice, Not Robot Voice</h3>
+        <p>Custom shop style guides teach the AI your tone, format, and keywords. Every listing sounds like you.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">📊</div>
+        <h3>"Mid or Not?" Scoring</h3>
+        <p>AI tells you which platform each item will perform best on. No more guessing.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">🎥</div>
+        <h3>Auto-Generated Videos</h3>
+        <p>5 templates optimized for TikTok, Reels, and Shorts. Turn listings into content in one click.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">⚡</div>
+        <h3>Bulk Listing</h3>
+        <p>Upload 20-100 items at once. AI generates every listing in parallel. Hours → minutes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">🤝</div>
+        <h3>Binding Bids</h3>
+        <p>Card-on-file offers. Buyers put money where their mouth is. No more ghosting.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">🏪</div>
+        <h3>Your Own Storefront</h3>
+        <p>Public shop page with a link. Like Linktree but it actually sells your stuff.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-emoji">💰</div>
+        <h3>Pricing Intelligence</h3>
+        <p>AI-powered price suggestions with market context. Know if you're underpricing or overpricing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: TIME SAVINGS -->
+<section class="slide">
+  <div class="slide-inner" style="text-align:center;">
+    <div class="section-label">The Numbers</div>
+    <div class="section-title">Time is money. Here's both.</div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number">80%</div>
+        <div class="stat-label">Less time listing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">&lt;2m</div>
+        <div class="stat-label">Per listing (vs 15-20 min)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4+</div>
+        <div class="stat-label">Platforms from one place</div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Video templates</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100</div>
+        <div class="stat-label">Bulk items at once</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">95%</div>
+        <div class="stat-label">AI cost savings (multi-provider)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: VS COMPETITION -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-label">Why Us</div>
+    <div class="section-title">Not another generic resale tool</div>
+    <div class="section-subtitle">Rackhouse is built specifically for vintage. That matters.</div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Generic Tools</th>
+          <th>Rackhouse</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Era-accurate AI descriptions</td>
+          <td><span class="cross">✕</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Custom shop voice/style</td>
+          <td><span class="cross">✕</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Platform recommendations</td>
+          <td><span class="cross">✕</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Auto video generation</td>
+          <td><span class="cross">✕</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Binding bids (card-on-file)</td>
+          <td><span class="cross">✕</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Seller storefronts</td>
+          <td><span class="cross">✕</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Built for vintage specifically</td>
+          <td><span class="cross">✕</span></td>
+          <td><span class="check">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SLIDE 7: PRICING -->
+<section class="slide">
+  <div class="slide-inner" style="text-align:center;">
+    <div class="section-label">Pricing</div>
+    <div class="section-title">Simple. No BS.</div>
+    <div class="section-subtitle" style="margin:0 auto 40px;">Founders pricing — locked in for early sellers.</div>
+    <div class="pricing-cards">
+      <div class="price-card">
+        <div class="price-tier">Free</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">forever</div>
+        <ul class="price-features">
+          <li>10 AI listings/month</li>
+          <li>5 videos/month (watermark)</li>
+          <li>1 platform connection</li>
+          <li>Public storefront</li>
+          <li>Basic analytics</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tier">Pro</div>
+        <div class="price-amount">$19</div>
+        <div class="price-period">/month · founders rate</div>
+        <ul class="price-features">
+          <li>Unlimited AI listings</li>
+          <li>Unlimited videos, no watermark</li>
+          <li>All platform connections</li>
+          <li>Bulk listing (100 at once)</li>
+          <li>Pricing intelligence</li>
+          <li>"Mid or Not?" scoring</li>
+          <li>Binding bids</li>
+          <li>Trend analysis</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: CTA -->
+<section class="slide cta-section">
+  <div class="slide-inner" style="text-align:center;">
+    <div class="divider"></div>
+    <div class="cta-title">Stop listing the slow way.</div>
+    <div class="cta-sub">Join the early access. Be one of the first shops on Rackhouse.</div>
+    <a href="#" class="cta-btn">Get Early Access →</a>
+    <div class="cta-note">Free to start · No credit card required · Founders pricing locked in</div>
+  </div>
+</section>
+
+</body>
+</html>
